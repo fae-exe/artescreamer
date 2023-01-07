@@ -26,10 +26,6 @@ public class OnTriggerSound : MonoBehaviour
 
      private void OnTriggerExit(Collider other) 
     {
-            
-            if (other.tag == "Player") 
-            //Stop the audio
-           // m_MyAudioSource.disabled;
          
         
     }
