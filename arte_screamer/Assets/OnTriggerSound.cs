@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class OnTriggerSound : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    AudioSource m_MyAudioSource;
+
     void Start()
     {
+         m_MyAudioSource = GetComponent<AudioSource>();
+
+     }
+    
+    private void OnTriggerEnter(Collider other) 
+    {
+           
+            if (other.tag == "Player") 
+            //Play the audio you attach to the AudioSource component
+            m_MyAudioSource.Play();
+            Debug.Log("collide");
+        
         
     }
 
-    // Update is called once per frame
-    void Update()
+     private void OnTriggerExit(Collider other) 
     {
+            
+            if (other.tag == "Player") 
+            //Stop the audio
+            m_MyAudioSource.Stop();
+         
         
     }
 }

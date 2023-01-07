@@ -5,20 +5,32 @@ using UnityEngine;
 public class Regard : MonoBehaviour
 {
    
-
+    //Raycast
     RaycastHit hit;
+
 
     // Couche ou le screamer est
     [SerializeField]
     LayerMask Screamer;
 
+    [SerializeField]
+    GameObject screamer; 
+    
+    public bool isActivate;
+
+    public Vector3 dir;
+
+
+    //Death Screen
     public bool gameOver = false;
     public GameObject deathScreen;
     
     void Start()
     {
         Screamer = LayerMask.GetMask("screamer");
-         deathScreen.SetActive(false);
+        screamer = GameObject.FindWithTag("Player");
+        deathScreen.SetActive(false);
+     
 
        
     }
@@ -27,8 +39,16 @@ public class Regard : MonoBehaviour
     void Update()
     {
 
+        dir = screamer.transform.position;
         // Affiche le raycast en temps réel
-        Debug.DrawRay(transform.position,transform.forward* 10,Color.red);
+        Debug.DrawRay(transform.position,dir* 10,Color.red);
+
+        if(isActivate)
+        StartCoroutine(watchingYou());
+        //If animation se retourner is playing : StartCoroutine(Fade());
+
+        
+
         if(Physics.Raycast(transform.position,transform.forward, out hit,50, Screamer))
         {
             gameOver = true;
@@ -36,6 +56,21 @@ public class Regard : MonoBehaviour
 
         } 
     }
+
+    IEnumerator watchingYou()
+    {
+        if(Physics.Raycast(transform.position,dir, out hit,50, Screamer))
+        {
+            gameOver = true;
+            deathScreen.SetActive(true);
+            yield return null;
+        } 
+    }
+
+    
+
+
+    
 
 
    
