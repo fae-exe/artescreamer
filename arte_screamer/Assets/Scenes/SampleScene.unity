@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,10 +155,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  characterDepthPosition: 0
+  characterXPosition: 0
   movementSmoothTime: 0.3
   characterSpeed: 2
-  worldMousePosV3: {x: 0, y: 0}
+  minVertPos: -1
+  maxVertPos: 2.2
+  minHorPos: -2.9
+  maxHorPos: 2.9
+  minFOV: 11
+  maxFOV: 32
+  XOffset: 0
+  YOffset: 0
+  targetFOV: 0
+  velocityFOV: 0
+  smoothTimeFOV: 0.3
+  bobUpDownRatio: 3.5
+  CharacterCam: {fileID: 957697898}
+  motionAnimator:
+    animationSpeed: 120
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.32499185
+        value: 1.0109406
+        inSlope: -0.00000024245455
+        outSlope: -0.00000024245455
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.780324
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    magnitude: 1
 --- !u!212 &68630439
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -218,15 +266,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68630437}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -28.69, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -44.070007, y: 0.3, z: 0.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 957697895}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +285,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   m_Layer: 0
   m_Name: MainCamera
@@ -246,14 +293,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -621,7 +660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957697894}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: -0.05, y: 0.008360391, z: -0.66}
+  m_LocalPosition: {x: 1.04, y: -0.72, z: -6.57}
   m_LocalScale: {x: 0.43290043, y: 0.14164305, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -693,8 +732,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50.54
-  field of view: 9.220576
+  far clip plane: 121
+  field of view: 32
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1273,7 +1312,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1964602101}
   - component: {fileID: 1964602100}
-  - component: {fileID: 1964602099}
   - component: {fileID: 1964602098}
   m_Layer: 0
   m_Name: VueMiroir
@@ -1315,14 +1353,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &1964602099
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964602097}
-  m_Enabled: 1
 --- !u!20 &1964602100
 Camera:
   m_ObjectHideFlags: 0
@@ -1339,7 +1369,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 49.9836
+  m_FocalLength: 114.17237
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1347,8 +1377,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 150
-  field of view: 27
+  far clip plane: 200
+  field of view: 12
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1374,7 +1404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964602097}
   m_LocalRotation: {x: -0.7071068, y: -0, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 5.1, y: 0.11, z: -0.45}
+  m_LocalPosition: {x: 5.1, y: 0.11, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
