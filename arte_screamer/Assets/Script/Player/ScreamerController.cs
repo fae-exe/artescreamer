@@ -33,7 +33,18 @@ public class ScreamerController : MonoBehaviour
     public float minRotX;
     public float maxRotX;
 
+    public float minXAxis;
+    public float maxXAxis;
+    public float xAxisGauge;
+
+    public float startXCameraPos;
+    public float endXCameraPos;
+    public AnimationCurve cameraMovementCurve;
+    public Vector3 targetMirrorCamPos;
+    public Vector3 mirrorCamVelocity = Vector3.zero;
+
     public Camera CharacterCam;
+    public Camera MirrorCam;
 
     public LoopAnimator motionAnimator;
 
@@ -56,6 +67,11 @@ public class ScreamerController : MonoBehaviour
     void Update()
     {
         Cursor.visible = false;
+
+        xAxisGauge = Mapping(transform.position.x, minXAxis, maxXAxis, 0.0f, 1.0f);
+        targetMirrorCamPos = new Vector3(Mapping(cameraMovementCurve.Evaluate(xAxisGauge), 0.0f, 1.0f, startXCameraPos, endXCameraPos), MirrorCam.transform.position.y, MirrorCam.transform.position.z);
+        MirrorCam.transform.position = Vector3.SmoothDamp(MirrorCam.transform.position, targetMirrorCamPos, ref mirrorCamVelocity, movementSmoothTime);
+
         motionAnimator.Update();
 
         targetPosition = new Vector3(
@@ -68,7 +84,11 @@ public class ScreamerController : MonoBehaviour
         YOffset = Mathf.Abs(Input.mousePosition.y - Screen.height / 2) / (Screen.height / 2);
         targetFOV = -Mapping(XOffset + YOffset, 0, 2, -maxFOV, -minFOV);
         CharacterCam.fieldOfView = Mathf.SmoothDamp(CharacterCam.fieldOfView, targetFOV, ref velocityFOV, smoothTimeFOV);
-        CharacterCam.transform.rotation = Quaternion.Slerp(CharacterCam.transform.rotation, Quaternion.Euler(180, Mapping(Input.mousePosition.x, 0, Screen.width, minRotX, maxRotX) - 90, 180), Time.deltaTime * 5.0f);
+        CharacterCam.transform.rotation = Quaternion.Slerp(CharacterCam.transform.rotation, 
+            Quaternion.Euler(180, Mapping(Input.mousePosition.x, 0, Screen.width, minRotX, maxRotX) - 90, 180), 
+            Time.deltaTime * 5.0f);
+
+
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, movementSmoothTime);
 
