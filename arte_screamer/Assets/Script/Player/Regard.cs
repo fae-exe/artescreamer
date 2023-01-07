@@ -59,6 +59,8 @@ public class Regard : MonoBehaviour
         } 
     }
 
+
+    // définir un range avec fae
     IEnumerator watchingYou()
     {
         if(Physics.Raycast(transform.position,dir, out hit,50, Screamer))
