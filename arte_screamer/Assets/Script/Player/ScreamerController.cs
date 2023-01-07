@@ -30,6 +30,9 @@ public class ScreamerController : MonoBehaviour
 
     public float bobUpDownRatio;
 
+    public float minRotX;
+    public float maxRotX;
+
     public Camera CharacterCam;
 
     public LoopAnimator motionAnimator;
@@ -65,6 +68,7 @@ public class ScreamerController : MonoBehaviour
         YOffset = Mathf.Abs(Input.mousePosition.y - Screen.height / 2) / (Screen.height / 2);
         targetFOV = -Mapping(XOffset + YOffset, 0, 2, -maxFOV, -minFOV);
         CharacterCam.fieldOfView = Mathf.SmoothDamp(CharacterCam.fieldOfView, targetFOV, ref velocityFOV, smoothTimeFOV);
+        CharacterCam.transform.rotation = Quaternion.Slerp(CharacterCam.transform.rotation, Quaternion.Euler(180, Mapping(Input.mousePosition.x, 0, Screen.width, minRotX, maxRotX) - 90, 180), Time.deltaTime * 5.0f);
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, movementSmoothTime);
 
