@@ -19,7 +19,7 @@ public class OnTriggerSound : MonoBehaviour
             if (other.tag == "Player") 
             //Play the audio you attach to the AudioSource component
             m_MyAudioSource.Play();
-            Debug.Log("collide");
+            Debug.Log("collider");
         
         
     }

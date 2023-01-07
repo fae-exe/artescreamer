@@ -20,6 +20,8 @@ public class Regard : MonoBehaviour
 
     public Vector3 dir;
 
+    public float timerView;
+
 
     //Death Screen
     public bool gameOver = false;
@@ -61,10 +63,21 @@ public class Regard : MonoBehaviour
     {
         if(Physics.Raycast(transform.position,dir, out hit,50, Screamer))
         {
+            timerView +=1;
+            if(timerView >5)
+            {
             gameOver = true;
             deathScreen.SetActive(true);
             yield return null;
-        } 
+            }
+            
+        } else 
+        
+        {
+             timerView -=1;
+             
+             
+        }
     }
 
     
