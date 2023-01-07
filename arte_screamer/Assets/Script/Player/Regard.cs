@@ -11,10 +11,15 @@ public class Regard : MonoBehaviour
     // Couche ou le screamer est
     [SerializeField]
     LayerMask Screamer;
+
+    public bool gameOver = false;
+    public GameObject deathScreen;
     
     void Start()
     {
         Screamer = LayerMask.GetMask("screamer");
+         deathScreen.SetActive(false);
+
        
     }
 
@@ -24,9 +29,11 @@ public class Regard : MonoBehaviour
 
         // Affiche le raycast en temps réel
         Debug.DrawRay(transform.position,transform.forward* 10,Color.red);
-        if(Physics.Raycast(transform.position,transform.forward, out hit,10, Screamer))
+        if(Physics.Raycast(transform.position,transform.forward, out hit,50, Screamer))
         {
-            Debug.Log(hit.transform.name);
+            gameOver = true;
+            deathScreen.SetActive(true);
+
         } 
     }
 
