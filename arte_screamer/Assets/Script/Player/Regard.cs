@@ -50,7 +50,7 @@ public class Regard : MonoBehaviour
         //If animation se retourner is playing : StartCoroutine(Fade());
 
         
-
+        // ELLE TE REGARDE T MORT
         if(Physics.Raycast(transform.position,transform.forward, out hit,50, Screamer))
         {
             gameOver = true;
