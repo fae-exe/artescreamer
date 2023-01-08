@@ -22,6 +22,7 @@ public class CutieMirrorBehaviour : MonoBehaviour
     public Vector3 basePosition;
     public Vector3 baseScale;
 
+    public Sprite cutieIsNotLooking;
     public Sprite cutiePhaseZero;
     public Sprite cutiePhaseOne;
     public float firstThreshold;
@@ -32,10 +33,17 @@ public class CutieMirrorBehaviour : MonoBehaviour
 
     public SpriteRenderer cutieRenderer;
 
+    public float LookingTimer;
+    public float LookingMinInterval;
+    public float LookingMaxInterval;
+    public float LookingNextTime;
+
+    public float LookingDecayer;
+    public float LookingMinDuration;
+    public float LookingMaxDuration;
+    public float LookingCurrentDuration;
 
     public GameObject deathScreen;
-
-
 
     public void LaunchGauge(float GaugeSpeed = 25.0f)
     {
@@ -65,12 +73,45 @@ public class CutieMirrorBehaviour : MonoBehaviour
         basePosition = transform.position;
         baseScale = transform.localScale;
         deathScreen.SetActive(false);
+
+        LookingNextTime = UnityEngine.Random.Range(LookingMinInterval, LookingMaxInterval);
+        LookingCurrentDuration = UnityEngine.Random.Range(LookingMinDuration, LookingMaxDuration);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if (isLooking)
+        {
+            LookingDecayer = Mathf.Max(0, LookingDecayer - Time.deltaTime);
+        }
+
+        if (LookingDecayer == 0)
+        {
+            isLooking = false;
+        }
+
+        if (detectionGauge.isActive)
+        {
+            isLooking = true;
+        }
+
+        if (!isLooking)
+        {
+            LookingTimer += Time.deltaTime;
+        }
+
+        if (LookingTimer > LookingNextTime)
+        {
+            isLooking = true;
+
+            LookingDecayer = LookingCurrentDuration;
+            LookingTimer = LookingTimer % LookingNextTime;
+
+            LookingNextTime = UnityEngine.Random.Range(LookingMinInterval, LookingMaxInterval);
+            LookingCurrentDuration = UnityEngine.Random.Range(LookingMinDuration, LookingMaxDuration);
+        }
 
         if(detectionGauge.isFull)
         deathScreen.SetActive(true);
@@ -99,7 +140,11 @@ public class CutieMirrorBehaviour : MonoBehaviour
             baseScale.y + yStretchRange * (cutieAnimator.valueInv - 0.5f),
             baseScale.z);
 
-        if (detectionGauge.value < firstThreshold)
+        if(!isLooking && detectionGauge.value == 0)
+        {
+            cutieRenderer.sprite = cutieIsNotLooking;
+        }
+        else if (detectionGauge.value < firstThreshold)
         {
             cutieRenderer.sprite = cutiePhaseZero;
         }
