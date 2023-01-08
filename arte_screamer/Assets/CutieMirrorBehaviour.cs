@@ -32,6 +32,11 @@ public class CutieMirrorBehaviour : MonoBehaviour
 
     public SpriteRenderer cutieRenderer;
 
+
+    public GameObject deathScreen;
+
+
+
     public void LaunchGauge(float GaugeSpeed = 25.0f)
     {
         if(isLooking)
@@ -59,11 +64,16 @@ public class CutieMirrorBehaviour : MonoBehaviour
         cutieAnimator.LaunchAnim();
         basePosition = transform.position;
         baseScale = transform.localScale;
+        deathScreen.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+        if(detectionGauge.isFull)
+        deathScreen.SetActive(true);
 
         if (!isLooking)
         {
