@@ -43,6 +43,10 @@ public class CutieMirrorBehaviour : MonoBehaviour
     public float LookingMaxDuration;
     public float LookingCurrentDuration;
 
+    public int roomNumber = 0;
+
+    public RandomSoundManager[] detectRSMArray;
+
     public GameObject deathScreen;
 
     public void LaunchGauge(float GaugeSpeed = 25.0f)
@@ -73,6 +77,7 @@ public class CutieMirrorBehaviour : MonoBehaviour
         basePosition = transform.position;
         baseScale = transform.localScale;
         deathScreen.SetActive(false);
+        isLooking = false;
 
         LookingNextTime = UnityEngine.Random.Range(LookingMinInterval, LookingMaxInterval);
         LookingCurrentDuration = UnityEngine.Random.Range(LookingMinDuration, LookingMaxDuration);
@@ -81,6 +86,7 @@ public class CutieMirrorBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        detectRSMArray[roomNumber].Update();
 
         if (isLooking)
         {
@@ -92,11 +98,6 @@ public class CutieMirrorBehaviour : MonoBehaviour
             isLooking = false;
         }
 
-        if (detectionGauge.isActive)
-        {
-            isLooking = true;
-        }
-
         if (!isLooking)
         {
             LookingTimer += Time.deltaTime;
@@ -105,6 +106,7 @@ public class CutieMirrorBehaviour : MonoBehaviour
         if (LookingTimer > LookingNextTime)
         {
             isLooking = true;
+            detectRSMArray[roomNumber].PlayRandomSound();
 
             LookingDecayer = LookingCurrentDuration;
             LookingTimer = LookingTimer % LookingNextTime;
