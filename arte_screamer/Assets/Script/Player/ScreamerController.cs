@@ -47,6 +47,9 @@ public class ScreamerController : MonoBehaviour
     public Camera MirrorCam;
 
     public LoopAnimator motionAnimator;
+    
+    // active/desactive curseur
+    public bool visibiliteCursor;
 
     float Mapping(float value, float leftMin, float leftMax, float rightMin, float rightMax)
     {
@@ -61,13 +64,14 @@ public class ScreamerController : MonoBehaviour
     {
         characterXPosition = transform.position.x;
         motionAnimator.LaunchAnim();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        Cursor.visible = false;
-
+        
+        visibiliteCursor = Cursor.visible;
         xAxisGauge = Mapping(transform.position.x, minXAxis, maxXAxis, 0.0f, 1.0f);
         targetMirrorCamPos = new Vector3(Mapping(cameraMovementCurve.Evaluate(xAxisGauge), 0.0f, 1.0f, startXCameraPos, endXCameraPos), MirrorCam.transform.position.y, MirrorCam.transform.position.z);
         MirrorCam.transform.position = Vector3.SmoothDamp(MirrorCam.transform.position, targetMirrorCamPos, ref mirrorCamVelocity, movementSmoothTime);
