@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class RandomSoundManager {
     [SerializeField] private AudioClip[] playlist;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] public AudioSource audioSource;
     [SerializeField] private float randomPitchMin = 1.0f;
     [SerializeField] private float randomPitchMax = 1.0f;
 
