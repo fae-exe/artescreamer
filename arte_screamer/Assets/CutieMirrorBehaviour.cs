@@ -28,15 +28,20 @@ public class CutieMirrorBehaviour : MonoBehaviour
     public Sprite cutiePhaseTwo;
     public float secondThreshold;
 
+    public bool isLooking;
+
     public SpriteRenderer cutieRenderer;
 
-    void LaunchGauge(float GaugeSpeed = 25.0f)
+    public void LaunchGauge(float GaugeSpeed = 25.0f)
     {
-        detectionGauge.animationSpeed = GaugeSpeed;
-        detectionGauge.ResumeAnim();
+        if(isLooking)
+        {
+            detectionGauge.animationSpeed = GaugeSpeed;
+            detectionGauge.ResumeAnim();
+        }
     }
 
-    void StopGauge()
+    public void StopGauge()
     {
         detectionGauge.PauseAnim();
     }
@@ -60,12 +65,7 @@ public class CutieMirrorBehaviour : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LaunchGauge();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (!isLooking)
         {
             StopGauge();
         }
