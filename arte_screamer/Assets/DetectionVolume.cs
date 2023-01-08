@@ -8,7 +8,7 @@ public class DetectionVolume : MonoBehaviour
 
     public float gaugeSpeed;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         cutieBehaviour.LaunchGauge(gaugeSpeed);
     }

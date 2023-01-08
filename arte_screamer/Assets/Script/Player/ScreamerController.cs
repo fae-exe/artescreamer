@@ -2,6 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class StepSFXManager
+{
+    public RandomSoundManager heelsRSM;
+    public RandomSoundManager toeRSM;
+
+    public float cooldownMinDuration;
+    public float cooldownMaxDuration;
+    public float cooldownTimer;
+    public float cooldownDuration = 1;
+
+    public bool isCooldown;
+
+    public void PlayStepSound ()
+    {
+        if(isCooldown)
+        {
+            return;
+        }
+
+        isCooldown = true;
+
+        heelsRSM.PlayRandomSound();
+        toeRSM.PlayRandomSound(false, heelsRSM.audioSource.clip.length);
+    }
+
+    public void Cooldown()
+    {
+        cooldownTimer += Time.deltaTime;
+
+        if (cooldownTimer > cooldownDuration)
+        {
+            isCooldown = false;
+            cooldownTimer = 0.0f;
+            cooldownDuration = UnityEngine.Random.Range(cooldownMinDuration, cooldownMaxDuration);
+        }
+    }
+
+    public void Update()
+    {   
+        heelsRSM.Update();
+        toeRSM.Update();
+
+        if (isCooldown)
+        {
+            Cooldown();
+            return;
+        }
+    }
+}
+
 public class ScreamerController : MonoBehaviour
 {
     public Vector3 targetPosition;
@@ -51,6 +102,8 @@ public class ScreamerController : MonoBehaviour
     // active/desactive curseur
     public bool visibiliteCursor;
 
+    public StepSFXManager stepManager;
+
     float Mapping(float value, float leftMin, float leftMax, float rightMin, float rightMax)
     {
         value = Mathf.Min(leftMax, value);
@@ -70,6 +123,7 @@ public class ScreamerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        stepManager.Update();
         
         visibiliteCursor = Cursor.visible;
         xAxisGauge = Mapping(transform.position.x, minXAxis, maxXAxis, 0.0f, 1.0f);
@@ -100,6 +154,7 @@ public class ScreamerController : MonoBehaviour
         {
             motionAnimator.ResumeAnim();
             characterXPosition += characterSpeed * Time.deltaTime;
+            stepManager.PlayStepSound();
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
